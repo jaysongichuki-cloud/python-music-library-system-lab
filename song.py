@@ -7,31 +7,20 @@ class Song:
     artist_counts = {}
 
     def __init__(self, name, artist, genre):
-        # --- Instance Attributes ---
+        # Assigning instance attributes
         self.name = name
         self.artist = artist
         self.genre = genre
 
-        # Increment total song count
+        # Track global stats
         Song.total_songs += 1
-
-        # Track unique items
         Song.unique_artists.add(artist)
         Song.unique_genres.add(genre)
 
-        # Update global count for genre
-        if genre in Song.genre_counts:
-            Song.genre_counts[genre] += 1
-        else:
-            Song.genre_counts[genre] = 1
+        # Increment counts
+        Song.genre_counts[genre] = Song.genre_counts.get(genre, 0) + 1
+        Song.artist_counts[artist] = Song.artist_counts.get(artist, 0) + 1
 
-        # Update global count for artist
-        if artist in Song.artist_counts:
-            Song.artist_counts[artist] += 1
-        else:
-            Song.artist_counts[artist] = 1
-
-    # --- Class Methods ---
     @classmethod
     def get_total_songs(cls):
         return cls.total_songs
